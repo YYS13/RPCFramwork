@@ -2,16 +2,16 @@ package com.yangyo;
 
 import com.yangyo.common.Invocation;
 import com.yangyo.protocal.HttpClient;
+import com.yangyo.proxy.ProxyFactory;
+
+import java.lang.reflect.Proxy;
 
 public class Consumer {
 
     public static void main(String[] args){
-        //創建發送 data
-        Invocation invocation = new Invocation(HelloService.class.getName(), "sayHello", new Class[]{String.class}, new Object[]{"yangyo"});
-
-        //發送
-        HttpClient httpClient = new HttpClient();
-        String result = httpClient.send("localhost", 8080, invocation);
+        HelloService helloService = ProxyFactory.getProxy(HelloService.class);
+        String result = helloService.sayHello("yangyo123");
         System.out.println(result);
+
     }
 }
